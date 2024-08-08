@@ -9,6 +9,7 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class EmailMapper {
 
@@ -44,11 +45,11 @@ public final class EmailMapper {
     private static <T> void validate(T object) {
         Set<ConstraintViolation<T>> violations = validator.validate(object);
         if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<T> violation : violations) {
-                sb.append(violation.getMessage()).append("\n");
-            }
-            throw new IllegalArgumentException("Validation errors: " + sb.toString());
+            String errorMessage = violations.stream()
+                    .map(ConstraintViolation::getMessage)
+                    .findFirst()
+                    .orElse("Unknown validation error");
+            throw new IllegalArgumentException("Validation errors: " + errorMessage);
         }
     }
 }
