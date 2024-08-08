@@ -1,5 +1,7 @@
 package com.gabrielklein.email.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabrielklein.email.dto.EmailAwsDTO;
 import com.gabrielklein.email.dto.EmailDTO;
 import com.gabrielklein.email.dto.EmailOciDTO;
@@ -15,13 +17,26 @@ public class EmailServices {
     @Value("${mail.integracao}")
     private String mailIntegracao;
 
-    public void update(EmailDTO emailDTO) {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public void emailIntegration(EmailDTO emailDTO) {
         if ("OCI".equalsIgnoreCase(mailIntegracao)) {
             EmailOciDTO emailOciDTO = convertToOciDTO(emailDTO);
-            System.out.println("aa");
+            try {
+                String serializedEmailOciDTO = objectMapper.writeValueAsString(emailOciDTO);
+                System.out.println(serializedEmailOciDTO);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         } else if ("AWS".equalsIgnoreCase(mailIntegracao)) {
             EmailAwsDTO emailAwsDTO = convertToAwsDTO(emailDTO);
-            System.out.println("aa");
+            try {
+                String serializedEmailAwsDTO = objectMapper.writeValueAsString(emailAwsDTO);
+                System.out.println(serializedEmailAwsDTO);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            System.out.println(emailAwsDTO);
         } else {
             throw new IllegalArgumentException("Tipo de integração desconhecido: " + mailIntegracao);
         }
