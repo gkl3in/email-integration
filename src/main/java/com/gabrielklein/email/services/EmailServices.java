@@ -6,7 +6,6 @@ import com.gabrielklein.email.dto.EmailAwsDTO;
 import com.gabrielklein.email.dto.EmailDTO;
 import com.gabrielklein.email.dto.EmailOciDTO;
 import com.gabrielklein.email.enums.EIntegrationType;
-import com.gabrielklein.email.exceptions.ValidationDataIntegrityException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,11 @@ public class EmailServices {
     @Value("${mail.integracao}")
     private String mailIntegracao;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+
+    public EmailServices(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     public void emailIntegration(EmailDTO emailDTO) {
         try {

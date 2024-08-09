@@ -13,7 +13,7 @@ public class EmailController {
     @Autowired
     private EmailServices emailService;
 
-    @PutMapping
+    @PostMapping
     public ResponseEntity<?> emailIntegration(@RequestBody EmailDTO emailDTO) {
         emailService.emailIntegration(emailDTO);
         return ResponseEntity.noContent().build();
