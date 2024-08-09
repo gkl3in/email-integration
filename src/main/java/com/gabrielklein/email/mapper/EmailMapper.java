@@ -3,13 +3,13 @@ package com.gabrielklein.email.mapper;
 import com.gabrielklein.email.dto.EmailAwsDTO;
 import com.gabrielklein.email.dto.EmailDTO;
 import com.gabrielklein.email.dto.EmailOciDTO;
+import com.gabrielklein.email.exceptions.ValidationDataIntegrityException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public final class EmailMapper {
 
@@ -46,10 +46,11 @@ public final class EmailMapper {
         Set<ConstraintViolation<T>> violations = validator.validate(object);
         if (!violations.isEmpty()) {
             String errorMessage = violations.stream()
-                    .map(ConstraintViolation::getMessage)
+                    .map(violation -> "Inconsistência encontrada no campo " + violation.getPropertyPath() + ": " + violation.getMessage())
                     .findFirst()
-                    .orElse("Unknown validation error");
-            throw new IllegalArgumentException("Validation errors: " + errorMessage);
+                    .orElse("Erro de validação desconhecido.");
+            throw new ValidationDataIntegrityException(errorMessage);
         }
     }
+
 }
