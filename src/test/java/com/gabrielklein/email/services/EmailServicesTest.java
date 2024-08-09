@@ -5,17 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabrielklein.email.dto.EmailAwsDTO;
 import com.gabrielklein.email.dto.EmailDTO;
 import com.gabrielklein.email.dto.EmailOciDTO;
-import com.gabrielklein.email.exceptions.ValidationDataIntegrityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class EmailServicesTest {
 
     @InjectMocks
