@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EmailApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void mainTest() {
+		EmailApplication.main(new String[] {});
 	}
 
 }

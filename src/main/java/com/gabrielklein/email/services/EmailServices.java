@@ -10,8 +10,6 @@ import com.gabrielklein.email.exceptions.ValidationDataIntegrityException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import static com.gabrielklein.email.enums.EIntegrationType.AWS;
-import static com.gabrielklein.email.enums.EIntegrationType.OCI;
 import static com.gabrielklein.email.mapper.EmailMapper.convertToAwsDTO;
 import static com.gabrielklein.email.mapper.EmailMapper.convertToOciDTO;
 
@@ -29,7 +27,7 @@ public class EmailServices {
             String serializedEmail = serializeEmail(emailDTO, eIntegrationType);
             System.out.println(serializedEmail);
         } catch (JsonProcessingException e) {
-            throw new ValidationDataIntegrityException("Erro ao processar JSON");
+            throw new com.gabrielklein.email.exceptions.JsonProcessingException("Erro ao processar JSON");
         }
     }
 
